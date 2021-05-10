@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="jumbotron" style="background: gray; height: 200px">
+    <h1 class="display-4">Listagem de clientes!</h1>
+  </div>
+
+  <form>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label class="sr-only" for="inlineFormInput">Pesquisar por nome</label>
+        <input type="text" name="filterName" class="form-control mb-2" id="inlineFormInput" placeholder="José Silva" [(ngModel)]="filters.name" />
+        <button type="button" class="btn btn-primary mb-2" (click)="filterByName()">Pesquisar</button>
+      </div>
+    </div>
+  </form>
+  <br />
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Nascimento</th>
+        <th>Enderêços</th>
+        <th>Redes Sociais</th>
+        <th>Documentos</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of allClients">
+        <td>{{ client.name }}</td>
+        <td><p *ngFor="let phone of client.phoneNumber"> <b>{{phone.nickName}}: </b> {{phone.phone}} </p></td>
+        <td>{{client.birthDate | date: 'dd/MM/yyyy'}}</td>
+        <td><p *ngFor="let adress of client.adress"> <b>{{adress.description}}: </b> {{adress.address}} </p></td>
+        <td><p *ngFor="let social of client.social"> {{social}}</p></td>
+        <td>CPF: {{client.cpf?client.cpf: ""}} <br> RG:{{client.rg?client.rg: ""}}</td>
+        <td><button type="button" class="btn btn-primary mb-2" (click)="deleteUser(client)" style="background-color: red">Excluir</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="col-auto">
+    <button type="button" (click)="backPage()" *ngIf="filters.offset > 0" class="btn btn-primary mb-2">Anterior</button>
+    <button type="button" (click)="nextPage()" class="btn btn-primary mb-2">Próxima</button>
+
+    <a href="inscrever-clients">Cadastrar Cliente</a>
+  </div>
+</div>
